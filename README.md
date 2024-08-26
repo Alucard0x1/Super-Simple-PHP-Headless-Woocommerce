@@ -1,3 +1,4 @@
+
 # 🛒 Super Simple PHP Headless WooCommerce
 
 Welcome to **Super Simple PHP Headless WooCommerce** – a minimal, no-frills solution for building a headless WooCommerce store using PHP. This application interacts directly with WooCommerce’s REST API to fetch products, manage carts, and process checkouts without relying on the traditional WordPress interface.
@@ -8,7 +9,7 @@ Welcome to **Super Simple PHP Headless WooCommerce** – a minimal, no-frills so
 - **Cart Management**: Dynamic product addition and removal from the cart.
 - **Simple Checkout**: Easy-to-use checkout process with order confirmation.
 - **Minimal Dependencies**: Pure PHP implementation without requiring complex frameworks.
-
+  
 ## 🏗️ How It Works
 
 1. **Product Fetching**: Products are fetched directly from WooCommerce using the API credentials stored in `config.php`. These products are then displayed on the main page (`index.php`).
@@ -22,19 +23,16 @@ Welcome to **Super Simple PHP Headless WooCommerce** – a minimal, no-frills so
 ## 🛠️ Installation
 
 1. Clone this repository:
-
-   ```bash
-   git clone https://github.com/Alucard0x1/Super-Simple-PHP-Headless-Woocommerce.git
-   ```
+    ```bash
+    git clone https://github.com/Alucard0x1/Super-Simple-PHP-Headless-Woocommerce.git
+    ```
 
 2. Navigate to the project directory:
-
-   ```bash
-   cd super-simple-php-headless-woocommerce
-   ```
+    ```bash
+    cd super-simple-php-headless-woocommerce
+    ```
 
 3. Configure WooCommerce API keys:
-
    - Open `config.php` and update the WooCommerce API credentials:
      ```php
      define('WOOCOMMERCE_API_URL', 'https://your-woocommerce-store-url/wp-json/wc/v3/');
@@ -43,15 +41,14 @@ Welcome to **Super Simple PHP Headless WooCommerce** – a minimal, no-frills so
      ```
 
 4. Start your local PHP server:
-
-   ```bash
-   php -S localhost:8000
-   ```
+    ```bash
+    php -S localhost:8000
+    ```
 
 5. Open your browser and visit:
-   ```
-   http://localhost:8000
-   ```
+    ```
+    http://localhost:8000
+    ```
 
 ## 📂 Project Structure
 
@@ -65,6 +62,7 @@ Welcome to **Super Simple PHP Headless WooCommerce** – a minimal, no-frills so
 ├── success.php                # Order success confirmation page
 ├── script.js                  # Frontend logic for cart updates
 └── logobca.png                # Logo for the checkout page
+```
 
 ## 💡 Notes
 
@@ -78,4 +76,3 @@ Feel free to fork this repository, submit issues, and make pull requests. Let's 
 ## 📝 License
 
 This project is licensed under the MIT License.
-```
