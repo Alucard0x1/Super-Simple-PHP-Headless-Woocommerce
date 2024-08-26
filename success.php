@@ -73,13 +73,22 @@ function format_rupiah($number) {
                             <p class="text-lg font-medium"><?php echo htmlspecialchars($product['name'], ENT_QUOTES, 'UTF-8'); ?></p>
                             <p>Quantity: <?php echo htmlspecialchars($order_data['cart'][$product['id']], ENT_QUOTES, 'UTF-8'); ?></p>
                         </div>
-                        <p class="text-lg font-semibold"><?php echo format_rupiah($product['price'] * $order_data['cart'][$product['id']]); ?></p>
+                        <p class="text-lg font-semibold">
+                            <?php 
+                            // Sanitize and escape product price and quantity
+                            $price = floatval($product['price']);  // Ensure it's a float number
+                            $quantity = intval($order_data['cart'][$product['id']]);  // Ensure it's an integer
+
+                            // Output the formatted price after multiplication
+                            echo htmlspecialchars(format_rupiah($price * $quantity), ENT_QUOTES, 'UTF-8'); 
+                            ?>
+                        </p>
                     </div>
                 <?php endforeach; ?>
             </div>
 
             <!-- Total Price -->
-            <p class="text-right text-xl font-bold mt-6">Total: <?php echo format_rupiah($order_data['total']); ?></p>
+            <p class="text-right text-xl font-bold mt-6">Total: <?php echo htmlspecialchars(format_rupiah(floatval($order_data['total'])), ENT_QUOTES, 'UTF-8'); ?></p>
         </div>
 
         <!-- Bank Details -->
@@ -88,9 +97,9 @@ function format_rupiah($number) {
             <div class="flex items-center">
                 <img src="logobca.png" alt="BCA Bank Logo" class="w-20 h-auto mr-8">
                 <div class="flex-grow">
-                    <p class="text-lg"><strong>Bank Name:</strong> BCA Bank</p>
-                    <p class="text-lg"><strong>Account Name:</strong> Example Account</p>
-                    <p class="text-lg"><strong>Account Number:</strong> 123456789</p>
+                    <p class="text-lg"><strong>Bank Name:</strong> <?php echo htmlspecialchars($bank_account_info['bank_name'], ENT_QUOTES, 'UTF-8'); ?></p>
+                    <p class="text-lg"><strong>Account Name:</strong> <?php echo htmlspecialchars($bank_account_info['account_name'], ENT_QUOTES, 'UTF-8'); ?></p>
+                    <p class="text-lg"><strong>Account Number:</strong> <?php echo htmlspecialchars($bank_account_info['account_number'], ENT_QUOTES, 'UTF-8'); ?></p>
                 </div>
             </div>
         </div>
