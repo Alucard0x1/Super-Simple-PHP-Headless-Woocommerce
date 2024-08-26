@@ -23,7 +23,7 @@ Welcome to **Super Simple PHP Headless WooCommerce** – a minimal, no-frills so
 
 1. Clone this repository:
     ```bash
-    git clone https://github.com/yourusername/super-simple-php-headless-woocommerce.git
+    git clone [https://github.com/yourusername/super-simple-php-headless-woocommerce.git](https://github.com/Alucard0x1/Super-Simple-PHP-Headless-Woocommerce.git)
     ```
 
 2. Navigate to the project directory:
