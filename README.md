@@ -3,6 +3,8 @@
 
 Welcome to **Super Simple PHP Headless WooCommerce** – a minimal, no-frills solution for building a headless WooCommerce store using PHP. This application interacts directly with WooCommerce’s REST API to fetch products, manage carts, and process checkouts without relying on the traditional WordPress interface.
 
+![Screenshot_1175](https://github.com/Alucard0x1/Super-Simple-PHP-Headless-Woocommerce/blob/main/Screenshot_1175.png)
+
 ## 🚀 Features
 
 - **Headless WooCommerce**: Seamless integration with WooCommerce via REST API.
