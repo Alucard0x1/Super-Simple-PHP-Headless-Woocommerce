@@ -1,1 +1,1 @@
-# Super-Simple-PHP-Headless-Woocommerce-
+# Super-Simple-PHP-Headless-Woocommerce
