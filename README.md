@@ -61,3 +61,16 @@ Welcome to **Super Simple PHP Headless WooCommerce** – a minimal, no-frills so
 ├── success.php                # Order success confirmation page
 ├── script.js                  # Frontend logic for cart updates
 └── logobca.png                # Logo for the checkout page
+
+## 💡 Notes
+
+- Ensure your WooCommerce store is running with the REST API enabled.
+- API credentials must be kept secure and should not be exposed to the client side.
+
+## ✨ Contributions
+
+Feel free to fork this repository, submit issues, and make pull requests. Let's make this project even better together!
+
+## 📝 License
+
+This project is licensed under the MIT License.
