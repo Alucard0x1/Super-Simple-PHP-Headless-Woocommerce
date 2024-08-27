@@ -355,7 +355,7 @@ footer {
     }
 }
 
-    </style>
+   </style>
 </head>
 <body>
     <!-- Header -->
@@ -381,14 +381,18 @@ footer {
                     <?php foreach ($products as $product): ?>
                         <div class="product">
                             <?php 
-                            $image_url = !empty($product['images'][0]['src']) ? $product['images'][0]['src'] : 'placeholder.jpg'; 
+                            // Secure the image URL and product name
+                            $image_url = !empty($product['images'][0]['src']) ? htmlspecialchars($product['images'][0]['src'], ENT_QUOTES, 'UTF-8') : 'placeholder.jpg'; 
+                            $product_name = htmlspecialchars($product['name'] ?? 'Product Name', ENT_QUOTES, 'UTF-8');
+                            $product_price = htmlspecialchars($product['price'] ?? 0, ENT_QUOTES, 'UTF-8');
+                            $product_id = htmlspecialchars($product['id'] ?? '', ENT_QUOTES, 'UTF-8');
                             ?>
-                            <img src="<?php echo htmlspecialchars($image_url, ENT_QUOTES, 'UTF-8'); ?>" alt="<?php echo htmlspecialchars($product['name'] ?? 'Product Image', ENT_QUOTES, 'UTF-8'); ?>" loading="lazy">
+                            <img src="<?php echo $image_url; ?>" alt="<?php echo $product_name; ?>" loading="lazy">
 
-                            <h2><?php echo htmlspecialchars($product['name'] ?? 'Product Name', ENT_QUOTES, 'UTF-8'); ?></h2>
+                            <h2><?php echo $product_name; ?></h2>
                             <div class="button-container">
-                                <p><?php echo format_rupiah($product['price'] ?? 0); ?></p>
-                                <button class="add-to-cart" data-id="<?php echo htmlspecialchars($product['id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">Add to Cart</button>
+                                <p><?php echo format_rupiah($product_price); ?></p>
+                                <button class="add-to-cart" data-id="<?php echo $product_id; ?>">Add to Cart</button>
                             </div>
                         </div>
                     <?php endforeach; ?>
@@ -418,33 +422,32 @@ footer {
     <footer>
         <p>&copy; 2024 Headless WooCommerce Online Store. All rights reserved.</p>
     </footer>
+
     <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const cartHeader = document.querySelector('.cart-header');
-    const cartSection = document.querySelector('.cart-section');
-    const arrowIcon = document.querySelector('.cart-header .arrow-icon');
+    document.addEventListener('DOMContentLoaded', function () {
+        const cartHeader = document.querySelector('.cart-header');
+        const cartSection = document.querySelector('.cart-section');
+        const arrowIcon = document.querySelector('.cart-header .arrow-icon');
 
-    // Handle accordion behavior based on screen size
-    function handleAccordion() {
-        if (window.innerWidth <= 1024) {
-            cartHeader.style.display = 'flex';
-            cartSection.classList.add('accordion-hidden');
-        } else {
-            cartHeader.style.display = 'none';
-            cartSection.classList.remove('accordion-hidden');
+        // Handle accordion behavior based on screen size
+        function handleAccordion() {
+            if (window.innerWidth <= 1024) {
+                cartHeader.style.display = 'flex';
+                cartSection.classList.add('accordion-hidden');
+            } else {
+                cartHeader.style.display = 'none';
+                cartSection.classList.remove('accordion-hidden');
+            }
         }
-    }
 
-    cartHeader.addEventListener('click', function () {
-        cartSection.classList.toggle('accordion-hidden');
-        cartHeader.classList.toggle('collapsed');
+        cartHeader.addEventListener('click', function () {
+            cartSection.classList.toggle('accordion-hidden');
+            cartHeader.classList.toggle('collapsed');
+        });
+
+        window.addEventListener('resize', handleAccordion);
+        handleAccordion(); // Initial call
     });
-
-    window.addEventListener('resize', handleAccordion);
-    handleAccordion(); // Initial call
-});
-
-
     </script>
     <script src="script.js" defer></script>
 </body>
