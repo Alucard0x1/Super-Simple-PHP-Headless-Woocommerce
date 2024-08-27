@@ -4,6 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'Rp. ' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ',-';
     }
 
+    function sanitizeHTML(input) {
+        const div = document.createElement('div');
+        div.textContent = input;
+        return div.innerHTML;
+    }
+
     function updateCart() {
         fetch('cart-handler.php?action=view')
             .then(response => response.json())
@@ -15,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 if (!data.cart || !data.products) {
                     console.error('Cart or Product data is missing');
-                    document.getElementById('cart-items').innerHTML = '<li>Cart is empty</li>';
+                    document.getElementById('cart-items').textContent = 'Cart is empty';
                     document.getElementById('cart-total').textContent = formatRupiah(0);
                     return;
                 }
@@ -29,14 +35,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     cartDetails += `
                         <li>
-                            <img src="${details.image}" alt="${details.name}">
+                            <img src="${sanitizeHTML(details.image)}" alt="${sanitizeHTML(details.name)}">
                             <div>
-                                <strong>${details.name}</strong><br>
+                                <strong>${sanitizeHTML(details.name)}</strong><br>
                                 <small>${formatRupiah(details.price)}</small>
                                 <div>
-                                    <button class="decrease-quantity" data-id="${productId}">-</button>
+                                    <button class="decrease-quantity" data-id="${sanitizeHTML(productId)}">-</button>
                                     <span>${quantity}</span>
-                                    <button class="increase-quantity" data-id="${productId}">+</button>
+                                    <button class="increase-quantity" data-id="${sanitizeHTML(productId)}">+</button>
                                 </div>
                             </div>
                         </li>
