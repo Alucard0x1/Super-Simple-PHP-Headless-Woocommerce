@@ -17,8 +17,8 @@ function add_to_cart($product_id) {
         $_SESSION['cart'][$product_id]++;
     }
 
-    // Debugging the session cart
-    error_log(print_r($_SESSION['cart'], true)); // This will log the cart content to the server's error log for inspection
+    // Debugging the session cart (remove in production)
+    error_log(print_r($_SESSION['cart'], true)); 
 }
 
 function decrease_from_cart($product_id) {
@@ -48,34 +48,26 @@ function empty_cart() {
 }
 
 try {
-    if ($action === 'add') {
-        $product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+    $product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
+
+    if ($action === 'add' || $action === 'increase') {
         if ($product_id === false) {
             throw new Exception('Invalid product ID');
         }
         add_to_cart($product_id);
         echo json_encode(array('success' => true));
-    } elseif ($action === 'increase') {
-        $product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
-        if ($product_id === false) {
-            throw new Exception('Invalid product ID');
-        }
-        add_to_cart($product_id); // Increment the quantity by calling add_to_cart
-        echo json_encode(array('success' => true));
     } elseif ($action === 'decrease') {
-        $product_id = filter_input(INPUT_POST, 'product_id', FILTER_VALIDATE_INT);
         if ($product_id === false) {
             throw new Exception('Invalid product ID');
         }
-        decrease_from_cart($product_id); // Decrease the quantity or remove if it's 1
+        decrease_from_cart($product_id);
         echo json_encode(array('success' => true));
     } elseif ($action === 'view') {
         $cart = view_cart();
-        $response = array(
-            'cart' => $cart['cart'],  // This should return just the cart array
-            'products' => $cart['products']  // This should return the product details
-        );
-        echo json_encode($response);
+        echo json_encode(array(
+            'cart' => $cart['cart'],
+            'products' => $cart['products']
+        ));
     } elseif ($action === 'empty') {
         empty_cart();
         echo json_encode(array('success' => true));
@@ -83,7 +75,8 @@ try {
         throw new Exception('Invalid action');
     }
 } catch (Exception $e) {
-    echo json_encode(array('error' => $e->getMessage()));
+    error_log($e->getMessage()); // Log the actual error message for debugging, do not expose it to the client
+    echo json_encode(array('error' => 'An error occurred. Please try again later.'));
 }
 
 function fetch_product_prices($product_ids) {
@@ -109,18 +102,19 @@ function fetch_product_prices($product_ids) {
     curl_close($ch);
     $products = json_decode($response, true);
     
-    // Ensure products are in the right format
     if (json_last_error() !== JSON_ERROR_NONE) {
         throw new Exception('Invalid JSON response');
     }
 
     $productDetails = array();
-    foreach ($products as $product) {
-        $productDetails[$product['id']] = array(
-            'name' => $product['name'],
-            'price' => $product['price'],
-            'image' => $product['images'][0]['src'] ?? 'placeholder.jpg' // Default to a placeholder if no image is available
-        );
+    if (!empty($products['products'])) {
+        foreach ($products['products'] as $product) {
+            $productDetails[$product['id']] = array(
+                'name' => $product['name'],
+                'price' => $product['price'],
+                'image' => $product['images'][0]['src'] ?? 'placeholder.jpg' // Default to a placeholder if no image is available
+            );
+        }
     }
 
     return $productDetails;
