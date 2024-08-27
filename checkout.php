@@ -36,14 +36,12 @@ if (!empty($cart)) {
     <title>Checkout</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        /* Custom Tailwind configuration */
         body {
             background-color: #f9f9f9;
         }
     </style>
 </head>
 <body class="font-sans bg-gray-100">
-
     <div class="container mx-auto p-5">
         <h1 class="text-4xl text-center font-bold mb-8">Checkout</h1>
 
@@ -113,6 +111,5 @@ if (!empty($cart)) {
             <a href="index.php" class="text-blue-600 hover:text-blue-800">← Back to Products</a>
         </div>
     </div>
-
 </body>
 </html>
