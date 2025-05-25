@@ -4,6 +4,21 @@ document.addEventListener('DOMContentLoaded', () => {
         return 'Rp. ' + number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + ',-';
     }
 
+    function escapeHTML(str) {
+        if (typeof str !== 'string') {
+            return '';
+        }
+        return str.replace(/[&<>"']/g, function (match) {
+            return {
+                '&': '&amp;',
+                '<': '&lt;',
+                '>': '&gt;',
+                '"': '&quot;',
+                "'": '&#039;'
+            }[match];
+        });
+    }
+
     function updateCart() {
         fetch('cart-handler.php?action=view')
             .then(response => response.json())
@@ -29,9 +44,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                     cartDetails += `
                         <li>
-                            <img src="${details.image}" alt="${details.name}">
+                            <img src="${escapeHTML(details.image)}" alt="${escapeHTML(details.name)}">
                             <div>
-                                <strong>${details.name}</strong><br>
+                                <strong>${escapeHTML(details.name)}</strong><br>
                                 <small>${formatRupiah(details.price)}</small>
                                 <div>
                                     <button class="decrease-quantity" data-id="${productId}">-</button>
